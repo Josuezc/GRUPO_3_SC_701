@@ -1,0 +1,182 @@
+﻿@model IEnumerable<GRUPO_3_SC_701.Models.Boleto>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user);
+
+
+    var userRol = roles.Any() ? roles.First() : "Sin Rol";
+
+    switch (userRol)
+    {
+        case "Admin":
+            <h1>Boletos</h1>
+
+            <p>
+                <a asp-action="Create" class="btn btn-info  btn-sm">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Usuario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FechaCompra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario.Ruta)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Usuario.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.Hora)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaCompra)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.RutaId)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning  btn-sm">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info  btn-sm">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            break;
+
+        case "User":
+            <h1>Boletos</h1>
+
+            <p>
+                <a asp-action="Create" class="btn btn-info  btn-sm">Reservar Boleto</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Usuario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FechaCompra)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario.Ruta)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Usuario.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.Hora)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaCompra)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.RutaId)
+                            </td>
+                            <td>
+
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info" >Details</a> |
+                                
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            break;
+
+        case "Conductor":
+            <h1>Boletos de la Ruta</h1>
+
+         
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Usuario)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario)
+                        </th>                      
+                        <th>
+                            @Html.DisplayNameFor(model => model.Horario.Ruta)
+                        </th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Usuario.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.Hora)
+                            </td>                         
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Horario.RutaId)
+                            </td>
+                           
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            break;
+
+        default:
+            Console.WriteLine("Rol no reconocido.");
+            break;
+    }
+      
+       
+}
+else
+{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Login">Iniciar sesión</a>
+        </li>
+    </ul>
+}
+
+

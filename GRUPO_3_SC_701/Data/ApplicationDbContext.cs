@@ -59,6 +59,9 @@ namespace GRUPO_3_SC_701.Data
             adminUser.PasswordHash = hasher.HashPassword(adminUser, "123");
 
             builder.Entity<IdentityUser>().HasData(adminUser);
+
+
+           
         }
     }
 }
