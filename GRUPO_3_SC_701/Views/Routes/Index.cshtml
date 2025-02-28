@@ -1,0 +1,38 @@
+﻿@* Index.cshtml *@
+@{
+    ViewData["Title"] = "Lista de Rutas";
+}
+
+<h1>Rutas Disponibles</h1>
+
+<table id="routesTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    fetch('/api/routes')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector('#routesTable tbody');
+            data.forEach(route => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${route.id}</td>
+                                <td>${route.codigo}</td>
+                                <td>${route.nombre}</td>
+                                <td>${route.descripcion}</td>
+                                <td>${route.estado ? 'Activo' : 'Inactivo'}</td>`;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+</script>
