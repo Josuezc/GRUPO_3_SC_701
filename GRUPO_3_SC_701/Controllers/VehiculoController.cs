@@ -54,35 +54,21 @@ namespace GRUPO_3_SC_701.Controllers
             return View(vehiculo);
         }
 
-        // GET: Vehiculo/Create
-       // public IActionResult Create()
-       // {
-       //     ViewData["UsuarioRegistroId"] = new SelectList(_context.Users, "Id", "Id");
-        //    return View();
-       // }
-
-        // POST: Vehiculo/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-      //  [HttpPost]
-       // [ValidateAntiForgeryToken]
-      //  public async Task<IActionResult> Create([Bind("Id,Placa,Modelo,Capacidad,Estado,FechaRegistro,UsuarioRegistroId")] Vehiculo vehiculo)
-     //   {
-            
-      //      if (ModelState.IsValid)
-       //     {
-      //          _context.Add(vehiculo);
-       //         await _context.SaveChangesAsync();
-       //         return RedirectToAction(nameof(Index));
-      //      }
-       //     ViewData["UsuarioRegistroId"] = new SelectList(_context.Users, "Id", "Id", vehiculo.UsuarioRegistroId);
-        //    return View(vehiculo);
-       // }
+  
 
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var roleName = "Conductor";
+            var roleId = await _context.Roles
+                .Where(r => r.Name == roleName)
+                .Select(r => r.Id)
+                .FirstOrDefaultAsync();
+
+            var usuariosConRol = await _context.Users
+                .Where(u => _context.UserRoles.Any(ur => ur.UserId == u.Id && ur.RoleId == roleId)).ToListAsync();
+            ViewData["UsuarioRegistroId"] = new SelectList(usuariosConRol, "Id", "UserName");
             return View();
         }
 
@@ -90,20 +76,19 @@ namespace GRUPO_3_SC_701.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(Vehiculo vehiculo)
-        {
-            
-            //string usuario = User.Identity?.Name ?? "UsuarioDesconocido";
-
-
-            string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
+        {          
+          
             vehiculo.FechaRegistro = DateTime.Now;
-            vehiculo.UsuarioRegistroId = userId;
+           
 
             _context.Vehiculos.Add(vehiculo);
             await _context.SaveChangesAsync();
-          
-                          
+
+
+            var roleName = "Conductor";
+            var roleId = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var usuariosConRol = await _context.Users.Where(u => _context.UserRoles.Any(ur => ur.UserId == u.Id && ur.RoleId == roleId)).ToListAsync();
+            ViewData["UsuarioRegistroId"] = new SelectList(usuariosConRol, "Id", "UserName", vehiculo.UsuarioRegistroId);
             return RedirectToAction("Index");
         }
         // GET: Vehiculo/Edit/5
@@ -119,7 +104,10 @@ namespace GRUPO_3_SC_701.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioRegistroId"] = new SelectList(_context.Users, "Id", "Id", vehiculo.UsuarioRegistroId);
+            var roleName = "Conductor";
+            var roleId = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var usuariosConRol = await _context.Users.Where(u => _context.UserRoles.Any(ur => ur.UserId == u.Id && ur.RoleId == roleId)).ToListAsync();
+            ViewData["UsuarioRegistroId"] = new SelectList(usuariosConRol, "Id", "UserName", vehiculo.UsuarioRegistroId);
             return View(vehiculo);
         }
 
@@ -134,8 +122,8 @@ namespace GRUPO_3_SC_701.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            //vehiculo.FechaRegistro = DateTime.Now;
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -155,7 +143,11 @@ namespace GRUPO_3_SC_701.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UsuarioRegistroId"] = new SelectList(_context.Users, "Id", "Id", vehiculo.UsuarioRegistroId);
+          
+            var roleName = "Conductor";
+            var roleId = await _context.Roles.Where(r => r.Name == roleName).Select(r => r.Id).FirstOrDefaultAsync();
+            var usuariosConRol = await _context.Users.Where(u => _context.UserRoles.Any(ur => ur.UserId == u.Id && ur.RoleId == roleId)).ToListAsync();
+            ViewData["UsuarioRegistroId"] = new SelectList(usuariosConRol, "Id", "UserName", vehiculo.UsuarioRegistroId);
             return View(vehiculo);
         }
 
