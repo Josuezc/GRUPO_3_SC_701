@@ -1,0 +1,34 @@
+﻿@model IEnumerable<GRUPO_3_SC_701.Models.Parada>
+
+@{
+    ViewData["Title"] = "Lista de Paradas";
+}
+
+<h2>Lista de Paradas</h2>
+
+<a asp-action="Create" class="btn btn-primary">Agregar Nueva Parada</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Orden</th>
+            <th>Ruta</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parada in Model)
+        {
+            <tr>
+                <td>@parada.Nombre</td>
+                <td>@parada.Orden</td>
+                <td>@(parada.Ruta != null ? parada.Ruta.Nombre : "Sin Ruta")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@parada.Id" class="btn btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@parada.Id" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

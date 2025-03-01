@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GRUPO_3_SC_701.Models
 {
@@ -9,7 +10,9 @@ namespace GRUPO_3_SC_701.Models
 
         [Required]
         public int RutaId { get; set; }
-        public Ruta Ruta { get; set; }
+
+        [ForeignKey("RutaId")]
+        public Ruta? Ruta { get; set; }
 
         [Required]
         [MaxLength(100)]

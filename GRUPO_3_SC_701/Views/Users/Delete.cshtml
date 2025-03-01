@@ -1,0 +1,38 @@
+﻿@model GRUPO_3_SC_701.ViewModels.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">Eliminar Usuario</h4>
+        </div>
+        <div class="card-body">
+            <h5 class="text-danger">¿Está seguro de eliminar este usuario?</h5>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3 fw-bold">Nombre de Usuario</dt>
+                <dd class="col-sm-9">@Model.UserName</dd>
+
+                <dt class="col-sm-3 fw-bold">Correo</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3 fw-bold">Teléfono</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3 fw-bold">Rol</dt>
+                <dd class="col-sm-9">@Model.Role</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

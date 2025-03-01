@@ -1,0 +1,39 @@
+﻿@model GRUPO_3_SC_701.Models.Parada
+
+@{
+    ViewData["Title"] = "Eliminar Parada";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h3 class="mb-0">Eliminar Parada</h3>
+        </div>
+        <div class="card-body">
+            <p class="lead">¿Está seguro de eliminar esta parada?</p>
+            <hr />
+
+            <dl class="row">
+                <dt class="col-sm-3 fw-bold">Nombre:</dt>
+                <dd class="col-sm-9">@Model.Nombre</dd>
+
+                <dt class="col-sm-3 fw-bold">Orden:</dt>
+                <dd class="col-sm-9">@Model.Orden</dd>
+
+                <dt class="col-sm-3 fw-bold">Ruta Asociada:</dt>
+                <dd class="col-sm-9">
+                    @(Model.Ruta != null ? Model.Ruta.Nombre : "Sin Ruta Asociada")
+                </dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

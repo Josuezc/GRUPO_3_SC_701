@@ -31,11 +31,11 @@ namespace GRUPO_3_SC_701.Models
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        public string UsuarioRegistroId { get; set; }
-        public IdentityUser UsuarioRegistro { get; set; }
+        public string? UsuarioRegistroId { get; set; }
+        public IdentityUser? UsuarioRegistro { get; set; }
 
-        public ICollection<Parada> Paradas { get; set; }
-        public ICollection<Horario> Horarios { get; set; }
-        public ICollection<RutaConductor> RutaConductores { get; set; }
+        public ICollection<Parada>? Paradas { get; set; }
+        public ICollection<Horario>? Horarios { get; set; }
+        public ICollection<RutaConductor>? RutaConductores { get; set; }
     }
 }

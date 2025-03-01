@@ -1,0 +1,15 @@
+﻿@model GRUPO_3_SC_701.Models.Ruta
+
+@{
+    ViewData["Title"] = "Eliminar Ruta";
+}
+
+<h2>Eliminar Ruta</h2>
+
+<p>¿Está seguro de eliminar esta ruta?</p>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
