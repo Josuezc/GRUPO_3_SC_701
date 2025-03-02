@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GRUPO_3_SC_701.Controllers
 {
-   [Authorize(Roles ="Admin")]
+ 
     public class VehiculoController : Controller
     {
         private readonly ApplicationDbContext _context;

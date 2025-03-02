@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace GRUPO_3_SC_701.Data
 {
@@ -30,10 +31,11 @@ namespace GRUPO_3_SC_701.Data
                 .HasForeignKey(rc => rc.RutaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
             builder.Entity<RutaConductor>()
-                .HasOne(rc => rc.Usuario)
-                .WithMany()
-                .HasForeignKey(rc => rc.UsuarioId)
+                .HasOne(rc => rc.Vehiculo)
+                .WithMany() 
+                .HasForeignKey(rc => rc.VehiculoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Horario>()

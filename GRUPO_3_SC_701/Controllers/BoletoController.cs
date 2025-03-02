@@ -28,19 +28,26 @@ namespace GRUPO_3_SC_701.Controllers
         {
             //obtiene el id del usuario logeado
             string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            
-            if (User.IsInRole("User"))
+            var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+            if (userRole=="User")
             {
 
                 var boletoUsuario = _context.Boletos.Include(b => b.Horario).Include(b => b.Usuario).Where(b=>b.UsuarioId == userId);
                 return View(await boletoUsuario.ToListAsync());
             }
-            if (User.IsInRole("Conductor"))
+            if (userRole == "Conductor")
             {
-                var RutaConductor = _context.RutaConductores.Where(rc => rc.UsuarioId == userId).Select(rc => rc.RutaId);
-                var boletos = await _context.Boletos.Include(b => b.Horario).Include(b => b.Usuario).Where(b => RutaConductor.Contains(b.Horario.RutaId)) 
-                 .ToListAsync(); 
-                return View( boletos);
+                var boletos = await _context.Boletos
+                    .Include(b => b.Horario)
+                        .ThenInclude(h => h.Ruta)
+                            .ThenInclude(r => r.RutaConductores)
+                                .ThenInclude(rc => rc.Vehiculo)
+                                    .ThenInclude(v => v.UsuarioRegistro)
+                    .Where(b => b.Horario.Ruta.RutaConductores
+                        .Any(rc => rc.Vehiculo.UsuarioRegistroId == userId)) 
+                    .ToListAsync();
+
+                return View(boletos);
             }
             //admin
             var applicationDbContext = _context.Boletos.Include(b => b.Horario).Include(b => b.Usuario);
@@ -87,6 +94,7 @@ namespace GRUPO_3_SC_701.Controllers
             
             if (!ModelState.IsValid)
             {
+                boleto.FechaCompra = DateTime.Now;
                 var horario = await _context.Horarios
                     .Include(h => h.Vehiculo)
                     .FirstOrDefaultAsync(h => h.Id == boleto.HorarioId);

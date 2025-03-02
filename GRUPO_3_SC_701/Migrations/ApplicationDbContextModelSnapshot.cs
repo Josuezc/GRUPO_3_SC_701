@@ -151,15 +151,14 @@ namespace GRUPO_3_SC_701.Migrations
                     b.Property<int>("RutaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("VehiculoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RutaId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("VehiculoId");
 
                     b.ToTable("RutaConductores");
                 });
@@ -321,15 +320,15 @@ namespace GRUPO_3_SC_701.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d025d732-87d5-4cdf-95a6-a87999b3a19f",
+                            Id = "b9a13fa7-d388-41ba-a85b-6f86a52f8883",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "59d5be23-da18-4ae3-abb8-053f5a47acb8",
+                            ConcurrencyStamp = "15d8f7dc-3291-41e1-a85c-78fc41c0efbe",
                             Email = "admin@domain.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEAD4QffKy0hKWunso9S3dx/tPnU7UemA6jOZxbwnBKzqJ2wsWu4K8MHJ3egfbqmRWg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJgCjLJEJ3CzIAPHNBkwaAPX88WXR4+VZ3v/lWSbImJ5jODtWzEywVtF5r/IG3XpZg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d36044f9-c308-4619-b970-33554ae7cc35",
+                            SecurityStamp = "05a6c157-b545-443f-88f6-861129a7854a",
                             TwoFactorEnabled = false,
                             UserName = "admin"
                         });
@@ -488,15 +487,15 @@ namespace GRUPO_3_SC_701.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Usuario")
+                    b.HasOne("GRUPO_3_SC_701.Models.Vehiculo", "Vehiculo")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("VehiculoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Ruta");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Vehiculo");
                 });
 
             modelBuilder.Entity("GRUPO_3_SC_701.Models.Vehiculo", b =>
