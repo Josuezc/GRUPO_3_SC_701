@@ -15,7 +15,7 @@
 
                 <div class="mb-3">
                     <label asp-for="UserName" class="form-label"></label>
-                    <input asp-for="UserName" class="form-control" placeholder="Ingrese el nombre de usuario" />
+                    <input type="hidden" asp-for="UserName" />
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="mb-3">

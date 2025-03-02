@@ -18,6 +18,7 @@ namespace GRUPO_3_SC_701.Models
 
         [Required]
         [MaxLength(20)]
+        [Validation.UniqueCodRuta]
         public string Codigo { get; set; }
 
         [Required]

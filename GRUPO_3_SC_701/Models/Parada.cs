@@ -9,6 +9,7 @@ namespace GRUPO_3_SC_701.Models
         public int Id { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "El valor no puede ser negativo.")]
         public int RutaId { get; set; }
 
         [ForeignKey("RutaId")]
@@ -19,6 +20,8 @@ namespace GRUPO_3_SC_701.Models
         public string Nombre { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "El valor no puede ser negativo.")]
+        [Validation.UniqueOrden]
         public int Orden { get; set; }
     }
 }

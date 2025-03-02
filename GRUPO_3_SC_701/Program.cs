@@ -2,16 +2,20 @@ using GRUPO_3_SC_701.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GRUPO_3_SC_701.Models;
+using Microsoft.Extensions.Options;
 
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseMySQL(builder.Configuration.GetConnectionString("GRUPO_3_SC_701")));
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("GRUPO_3_SC_701") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
