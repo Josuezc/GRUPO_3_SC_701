@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,7 +17,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GRUPO_3_SC_701</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -25,6 +28,26 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Boleto" asp-action="Index">Boleto</a>
+                        </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            
+                                var user = await UserManager.GetUserAsync(User);
+                                var roles = await UserManager.GetRolesAsync(user);
+
+
+                                var userRol = roles.Any() ? roles.First() : "Sin Rol";
+                            @if (userRol == "Admin")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vehiculo" asp-action="Index">Vehiculo</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="RutaConductors" asp-action="Index">Ruta Vehiculo</a>
+                            </li>}
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

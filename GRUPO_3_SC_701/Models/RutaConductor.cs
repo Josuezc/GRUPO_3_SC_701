@@ -13,7 +13,7 @@ namespace GRUPO_3_SC_701.Models
         public Ruta Ruta { get; set; }
 
         [Required]
-        public string UsuarioId { get; set; }
-        public IdentityUser Usuario { get; set; }
+        public int VehiculoId { get; set; }
+        public Vehiculo? Vehiculo { get; set; }
     }
 }

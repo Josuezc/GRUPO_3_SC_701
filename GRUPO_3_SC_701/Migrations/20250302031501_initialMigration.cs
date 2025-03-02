@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GRUPO_3_SC_701.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -226,32 +226,6 @@ namespace GRUPO_3_SC_701.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RutaConductores",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RutaId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RutaConductores", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RutaConductores_AspNetUsers_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RutaConductores_Rutas_RutaId",
-                        column: x => x.RutaId,
-                        principalTable: "Rutas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Horarios",
                 columns: table => new
                 {
@@ -272,6 +246,32 @@ namespace GRUPO_3_SC_701.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Horarios_Vehiculos_VehiculoId",
+                        column: x => x.VehiculoId,
+                        principalTable: "Vehiculos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RutaConductores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RutaId = table.Column<int>(type: "int", nullable: false),
+                    VehiculoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RutaConductores", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RutaConductores_Rutas_RutaId",
+                        column: x => x.RutaId,
+                        principalTable: "Rutas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RutaConductores_Vehiculos_VehiculoId",
                         column: x => x.VehiculoId,
                         principalTable: "Vehiculos",
                         principalColumn: "Id",
@@ -308,7 +308,7 @@ namespace GRUPO_3_SC_701.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d025d732-87d5-4cdf-95a6-a87999b3a19f", 0, "59d5be23-da18-4ae3-abb8-053f5a47acb8", "admin@domain.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEAD4QffKy0hKWunso9S3dx/tPnU7UemA6jOZxbwnBKzqJ2wsWu4K8MHJ3egfbqmRWg==", null, false, "d36044f9-c308-4619-b970-33554ae7cc35", false, "admin" });
+                values: new object[] { "b9a13fa7-d388-41ba-a85b-6f86a52f8883", 0, "15d8f7dc-3291-41e1-a85c-78fc41c0efbe", "admin@domain.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEJgCjLJEJ3CzIAPHNBkwaAPX88WXR4+VZ3v/lWSbImJ5jODtWzEywVtF5r/IG3XpZg==", null, false, "05a6c157-b545-443f-88f6-861129a7854a", false, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -380,9 +380,9 @@ namespace GRUPO_3_SC_701.Migrations
                 column: "RutaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RutaConductores_UsuarioId",
+                name: "IX_RutaConductores_VehiculoId",
                 table: "RutaConductores",
-                column: "UsuarioId");
+                column: "VehiculoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rutas_UsuarioRegistroId",
