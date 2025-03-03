@@ -68,18 +68,54 @@ namespace GRUPO_3_SC_701.Data
                 NormalizedEmail = "ADMIN@DOMAIN.COM",
                 EmailConfirmed = true
             };
+            var userUser = new IdentityUser
+            {
+                Id = "1002",
+                UserName = "user@domain.com",
+                Email = "user@domain.com",
+                NormalizedUserName = "USER@DOMAIN.COM",
+                NormalizedEmail = "USER@DOMAIN.COM",
+                EmailConfirmed = true
+            };
+            var clientUser = new IdentityUser
+            {
+                Id = "1003",
+                UserName = "client@domain.com",
+                Email = "client@domain.com",
+                NormalizedUserName = "CLIENT@DOMAIN.COM",
+                NormalizedEmail = "CLIENT@DOMAIN.COM",
+                EmailConfirmed = true
+            };
 
             var hasher = new PasswordHasher<IdentityUser>();
             adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin123!");
+            userUser.PasswordHash = hasher.HashPassword(userUser, "User123!");
+            clientUser.PasswordHash = hasher.HashPassword(clientUser, "Client123!");
 
             builder.Entity<IdentityUser>().HasData(adminUser);
+            builder.Entity<IdentityUser>().HasData(userUser);
+            builder.Entity<IdentityUser>().HasData(clientUser);
+
+
 
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>
                 {
-                    UserId = "1001",
-                    RoleId = "1"
-                }
+                    UserId = "1001",RoleId = "1"
+
+                },
+                 new IdentityUserRole<string>
+                 {
+                     UserId = "1002",
+                     RoleId = "2"
+
+                 },
+                  new IdentityUserRole<string>
+                  {
+                      UserId = "1003",
+                      RoleId = "3"
+
+                  }
             );
 
         }
