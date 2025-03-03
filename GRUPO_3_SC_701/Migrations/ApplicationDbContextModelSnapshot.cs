@@ -130,7 +130,6 @@ namespace GRUPO_3_SC_701.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioRegistroId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -226,6 +225,26 @@ namespace GRUPO_3_SC_701.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "Conductor",
+                            NormalizedName = "CONDUCTOR"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Usuario",
+                            NormalizedName = "USUARIO"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -320,17 +339,19 @@ namespace GRUPO_3_SC_701.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b9a13fa7-d388-41ba-a85b-6f86a52f8883",
+                            Id = "1001",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "15d8f7dc-3291-41e1-a85c-78fc41c0efbe",
+                            ConcurrencyStamp = "90b031ef-c887-4741-941f-ae830a4ab022",
                             Email = "admin@domain.com",
-                            EmailConfirmed = false,
+                            EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEJgCjLJEJ3CzIAPHNBkwaAPX88WXR4+VZ3v/lWSbImJ5jODtWzEywVtF5r/IG3XpZg==",
+                            NormalizedEmail = "ADMIN@DOMAIN.COM",
+                            NormalizedUserName = "ADMIN@DOMAIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMSYYjIflLVFRHmcLAQTqfFYosrSUMozBpPCzHqWZTlhev6YZLvEaL6hx39nVKkCAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "05a6c157-b545-443f-88f6-861129a7854a",
+                            SecurityStamp = "d91a3887-6af9-47bc-9bf5-d9f6a9446509",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin@domain.com"
                         });
                 });
 
@@ -396,6 +417,13 @@ namespace GRUPO_3_SC_701.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1001",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -472,9 +500,7 @@ namespace GRUPO_3_SC_701.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "UsuarioRegistro")
                         .WithMany()
-                        .HasForeignKey("UsuarioRegistroId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioRegistroId");
 
                     b.Navigation("UsuarioRegistro");
                 });

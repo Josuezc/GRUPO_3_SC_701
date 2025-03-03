@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseMySQL(builder.Configuration.GetConnectionString("GRUPO_3_SC_701")));
+//builder.Services.AddDbContext<ApplicationDbContext>(op => op.UseMySQL(builder.Configuration.GetConnectionString("GRUPO_3_SC_701")));
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("GRUPO_3_SC_701") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

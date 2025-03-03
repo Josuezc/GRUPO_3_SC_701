@@ -51,19 +51,37 @@ namespace GRUPO_3_SC_701.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
 
+            var roles = new List<IdentityRole>
+            {
+                new IdentityRole { Id = "1", Name = "Administrador", NormalizedName = "ADMINISTRADOR" },
+                new IdentityRole { Id = "2", Name = "Conductor", NormalizedName = "CONDUCTOR" },
+                new IdentityRole { Id = "3", Name = "Usuario", NormalizedName = "USUARIO" }
+            };
+            builder.Entity<IdentityRole>().HasData(roles);
+
             var adminUser = new IdentityUser
             {
-                UserName = "admin",
+                Id = "1001",
+                UserName = "admin@domain.com",
                 Email = "admin@domain.com",
+                NormalizedUserName = "ADMIN@DOMAIN.COM",
+                NormalizedEmail = "ADMIN@DOMAIN.COM",
+                EmailConfirmed = true
             };
 
             var hasher = new PasswordHasher<IdentityUser>();
-            adminUser.PasswordHash = hasher.HashPassword(adminUser, "123");
+            adminUser.PasswordHash = hasher.HashPassword(adminUser, "Admin123!");
 
             builder.Entity<IdentityUser>().HasData(adminUser);
 
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>
+                {
+                    UserId = "1001",
+                    RoleId = "1"
+                }
+            );
 
-           
         }
     }
 }

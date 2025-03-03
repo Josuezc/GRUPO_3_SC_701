@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GRUPO_3_SC_701.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,7 +169,7 @@ namespace GRUPO_3_SC_701.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false),
                     FechaRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioRegistroId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UsuarioRegistroId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,8 +178,7 @@ namespace GRUPO_3_SC_701.Migrations
                         name: "FK_Rutas_AspNetUsers_UsuarioRegistroId",
                         column: x => x.UsuarioRegistroId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -306,9 +307,24 @@ namespace GRUPO_3_SC_701.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "1", null, "Administrador", "ADMINISTRADOR" },
+                    { "2", null, "Conductor", "CONDUCTOR" },
+                    { "3", null, "Usuario", "USUARIO" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b9a13fa7-d388-41ba-a85b-6f86a52f8883", 0, "15d8f7dc-3291-41e1-a85c-78fc41c0efbe", "admin@domain.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEJgCjLJEJ3CzIAPHNBkwaAPX88WXR4+VZ3v/lWSbImJ5jODtWzEywVtF5r/IG3XpZg==", null, false, "05a6c157-b545-443f-88f6-861129a7854a", false, "admin" });
+                values: new object[] { "1001", 0, "90b031ef-c887-4741-941f-ae830a4ab022", "admin@domain.com", true, false, null, "ADMIN@DOMAIN.COM", "ADMIN@DOMAIN.COM", "AQAAAAIAAYagAAAAEMSYYjIflLVFRHmcLAQTqfFYosrSUMozBpPCzHqWZTlhev6YZLvEaL6hx39nVKkCAA==", null, false, "d91a3887-6af9-47bc-9bf5-d9f6a9446509", false, "admin@domain.com" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "1", "1001" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
