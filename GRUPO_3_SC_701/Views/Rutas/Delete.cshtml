@@ -4,12 +4,29 @@
     ViewData["Title"] = "Eliminar Ruta";
 }
 
-<h2>Eliminar Ruta</h2>
+<div class="container mt-4">
+    <h2 class="mb-3 text-danger">❌ Eliminar Ruta</h2>
 
-<p>¿Está seguro de eliminar esta ruta? Si elimina esta ruta se eliminaran las paradas relacionadas a esta</p>
+    <div class="alert alert-warning">
+        <strong>⚠️ Advertencia:</strong> ¿Está seguro de que desea eliminar esta ruta?
+        <br>Si elimina esta ruta, también se eliminarán todas las paradas asociadas.
+    </div>
 
-<form asp-action="Delete" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+    <div class="card shadow-sm p-4">
+        <h5 class="text-dark">🛤 Detalles de la Ruta</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Código:</strong> @Model.Codigo</li>
+            <li class="list-group-item"><strong>Nombre:</strong> @Model.Nombre</li>
+            <li class="list-group-item"><strong>Estado:</strong> @(Model.Estado ? "✅ Activo" : "❌ Inactivo")</li>
+        </ul>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">🔙 Cancelar</a>
+                <button type="submit" class="btn btn-danger">🗑 Eliminar Ruta</button>
+            </div>
+        </form>
+    </div>
+</div>

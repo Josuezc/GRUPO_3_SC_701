@@ -1,64 +1,79 @@
-﻿    @model GRUPO_3_SC_701.Models.Vehiculo
+﻿@model GRUPO_3_SC_701.Models.Vehiculo
 
-    @{
-        ViewData["Title"] = "Edit";
-    }
+@{
+    ViewData["Title"] = "Editar Vehículo";
+}
 
-    <h1>Edit</h1>
+<div class="container mt-4">
+    <h2 class="mb-3">🚗 Editar Vehículo</h2>
 
-    <h4>Vehiculo</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">📋 Información del Vehículo</h5>
+            <hr />
+
             <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
                 <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Placa" class="control-label"></label>
-                    <input asp-for="Placa" class="form-control" />
-                    <span asp-validation-for="Placa" class="text-danger"></span>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Placa" class="control-label">🔢 Placa</label>
+                            <input asp-for="Placa" class="form-control form-control-lg" />
+                            <span asp-validation-for="Placa" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Modelo" class="control-label">🚙 Modelo</label>
+                            <input asp-for="Modelo" class="form-control form-control-lg" />
+                            <span asp-validation-for="Modelo" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Capacidad" class="control-label">👥 Capacidad</label>
+                            <input asp-for="Capacidad" class="form-control form-control-lg" />
+                            <span asp-validation-for="Capacidad" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Estado" class="control-label">⚙️ Estado del Vehículo</label>
+                            <select asp-for="Estado" class="form-control form-control-lg"
+                                    asp-items="Html.GetEnumSelectList<EstadoVehiculo>()">
+                            </select>
+                            <span asp-validation-for="Estado" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="FechaRegistro" class="control-label">📅 Fecha de Registro</label>
+                            <input asp-for="FechaRegistro" class="form-control form-control-lg" readonly />
+                            <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UsuarioRegistroId" class="control-label">👤 Usuario Conductor</label>
+                            <select asp-for="UsuarioRegistroId" class="form-control form-control-lg"
+                                    asp-items="@(ViewData["UsuarioRegistroId"] as SelectList)">
+                                <option value="">Seleccione un usuario</option>
+                            </select>
+                            <span asp-validation-for="UsuarioRegistroId" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Modelo" class="control-label"></label>
-                    <input asp-for="Modelo" class="form-control" />
-                    <span asp-validation-for="Modelo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Capacidad" class="control-label"></label>
-                    <input asp-for="Capacidad" class="form-control" />
-                    <span asp-validation-for="Capacidad" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Estado" class="control-label">Estado del Vehículo</label>
-                    <select asp-for="Estado" class="form-control"
-                            asp-items="Html.GetEnumSelectList<EstadoVehiculo>()">
-                    </select>
-                    <span asp-validation-for="Estado" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FechaRegistro" class="control-label"></label>
-                    <input asp-for="FechaRegistro" class="form-control" />
-                    <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UsuarioRegistroId" class="control-label">Usuario Conductor</label>
-                    <select asp-for="UsuarioRegistroId" class="form-control"
-                            asp-items="@(ViewData["UsuarioRegistroId"] as SelectList)">
-                        <option value="">Seleccione un usuario</option>
-                    </select>
-                    <span asp-validation-for="UsuarioRegistroId" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-secondary btn-lg">📋 Volver</a>
+                    <button type="submit" class="btn btn-primary btn-lg">💾 Guardar</button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+}

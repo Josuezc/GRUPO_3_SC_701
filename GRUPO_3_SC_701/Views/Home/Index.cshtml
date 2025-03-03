@@ -1,8 +1,150 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
+@if (SignInManager.IsSignedIn(User))
+{
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user);
+    var userRol = roles.FirstOrDefault() ?? "Sin Rol";
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <hr />
+    <h2 class="text-center text-uppercase mt-4 mb-4">Panel de Control</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        @if (userRol == "Administrador")
+        {
+            @Html.Raw(GetAdminCards())
+        }
+        else if (userRol == "Conductor")
+        {
+            @Html.Raw(GetConductorCards())
+        }
+        else if (userRol == "Usuario")
+        {
+            @Html.Raw(GetUsuarioCards())
+        }
+    </div>
+}
+
+@functions {
+    string GetAdminCards()
+    {
+        return @"
+        <div class='col'>
+            <a href='/Rutas/Index' class='card text-white bg-primary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🛤 Rutas</h5>
+                    <p class='card-text'>Administrar rutas del transporte.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Paradas/Index' class='card text-white bg-success shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🚏 Paradas</h5>
+                    <p class='card-text'>Gestionar las paradas registradas.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Users/Index' class='card text-white bg-warning shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>👥 Usuarios</h5>
+                    <p class='card-text'>Administrar usuarios y roles.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Horarios/Index' class='card text-white bg-secondary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>Horarios</h5>
+                    <p class='card-text'>Horarios.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Boleto/Index' class='card text-white bg-info shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🎫 Boletos</h5>
+                    <p class='card-text'>Gestionar ventas de boletos.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Vehiculo/Index' class='card text-white bg-danger shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🚗 Vehículos</h5>
+                    <p class='card-text'>Administrar flota de vehículos.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/RutaConductors/Index' class='card text-white bg-secondary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🚚 Ruta Conductor</h5>
+                    <p class='card-text'>Asignación de conductores a rutas.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/api/routes' class='card text-white bg-dark shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>📡 API Routes</h5>
+                    <p class='card-text'>Consultar rutas desde la API.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Dashboard' class='card text-white bg-primary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>📊 Dashboard</h5>
+                    <p class='card-text'>Visualizar métricas del sistema.</p>
+                </div>
+            </a>
+        </div>";
+    }
+
+    string GetConductorCards()
+    {
+        return @"
+        <div class='col'>
+            <a href='/Rutas/Index' class='card text-white bg-primary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🛤 Rutas</h5>
+                    <p class='card-text'>Consultar rutas asignadas.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Paradas/Index' class='card text-white bg-success shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🚏 Paradas</h5>
+                    <p class='card-text'>Consultar paradas.</p>
+                </div>
+            </a>
+        </div>";
+    }
+
+    string GetUsuarioCards()
+    {
+        return @"
+        <div class='col'>
+            <a href='/Rutas/Index' class='card text-white bg-primary shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🛤 Rutas</h5>
+                    <p class='card-text'>Explorar rutas disponibles.</p>
+                </div>
+            </a>
+        </div>
+        <div class='col'>
+            <a href='/Boleto/Index' class='card text-white bg-info shadow-sm h-100'>
+                <div class='card-body text-center'>
+                    <h5 class='card-title'>🎫 Boletos</h5>
+                    <p class='card-text'>Comprar boletos.</p>
+                </div>
+            </a>
+        </div>";
+    }
+}

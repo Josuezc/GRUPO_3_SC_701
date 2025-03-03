@@ -1,44 +1,59 @@
 ﻿@model GRUPO_3_SC_701.Models.Boleto
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Boleto";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-warning text-white text-center">
+                    <h3><i class="fas fa-edit"></i> Editar Boleto</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                        <input type="hidden" asp-for="Id" />
 
-<h4>Boleto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
-                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="UsuarioId" class="form-label"><i class="fas fa-user"></i> Usuario</label>
+                            <select asp-for="UsuarioId" class="form-select" asp-items="ViewBag.UsuarioId"></select>
+                            <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label asp-for="HorarioId" class="form-label"><i class="far fa-clock"></i> Horario</label>
+                            <select asp-for="HorarioId" class="form-select" asp-items="ViewBag.HorarioId"></select>
+                            <span asp-validation-for="HorarioId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label asp-for="FechaCompra" class="form-label"><i class="fas fa-calendar-alt"></i> Fecha de Compra</label>
+                            <input asp-for="FechaCompra" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="FechaCompra" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Guardar Cambios
+                            </button>
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Volver a la lista
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="HorarioId" class="control-label"></label>
-                <select asp-for="HorarioId" class="form-control" asp-items="ViewBag.HorarioId"></select>
-                <span asp-validation-for="HorarioId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaCompra" class="control-label"></label>
-                <input asp-for="FechaCompra" class="form-control" />
-                <span asp-validation-for="FechaCompra" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" >Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

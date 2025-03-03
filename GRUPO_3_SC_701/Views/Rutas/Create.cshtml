@@ -1,34 +1,52 @@
 ﻿@model GRUPO_3_SC_701.Models.Ruta
 
 @{
-    ViewData["Title"] = "Crear Ruta";
+    ViewData["Title"] = "Crear Nueva Ruta";
 }
 
-<h2>Crear Ruta</h2>
+<div class="container mt-4">
+    <h2 class="mb-3 text-primary">🛤 Crear Nueva Ruta</h2>
+    <p class="text-muted">Complete la información para registrar una nueva ruta.</p>
 
-<form asp-action="Create" method="post">
-    <div asp-validation-summary="All" class="alert alert-danger"></div>
-    <div class="form-group">
-        <label asp-for="Codigo"></label>
-        <input asp-for="Codigo" class="form-control" />
-        <span asp-validation-for="Codigo" class="text-danger"></span>
+    <div class="card shadow-sm p-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Codigo" class="form-label">Código de Ruta</label>
+                <input asp-for="Codigo" class="form-control" placeholder="Ejemplo: RUTA-001" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Nombre" class="form-label">Nombre de la Ruta</label>
+                <input asp-for="Nombre" class="form-control" placeholder="Ejemplo: Ruta Centro - Norte" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label">Descripción</label>
+                <textarea asp-for="Descripcion" class="form-control" rows="3" placeholder="Ingrese una descripción"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Estado" class="form-label">Estado</label>
+                <select asp-for="Estado" class="form-select">
+                    <option value="true">✅ Activo</option>
+                    <option value="false">❌ Inactivo</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">🔙 Cancelar</a>
+                <button type="submit" class="btn btn-primary">💾 Guardar Ruta</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="Nombre"></label>
-        <input asp-for="Nombre" class="form-control" />
-        <span asp-validation-for="Nombre" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Descripcion"></label>
-        <textarea asp-for="Descripcion" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="Estado"></label>
-        <select asp-for="Estado" class="form-control">
-            <option value="true">Activo</option>
-            <option value="false">Inactivo</option>
-        </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

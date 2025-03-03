@@ -1,36 +1,42 @@
 ﻿@model GRUPO_3_SC_701.Models.RutaConductor
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Asignar Vehículo a Ruta";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
+    <h2 class="mb-3 text-primary">🛤 Asignar Vehículo a Ruta</h2>
 
-<h4>RutaConductor</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="card shadow p-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RutaId" class="control-label"></label>
-                <select asp-for="RutaId" class ="form-control" asp-items="ViewBag.RutaId"></select>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="RutaId" class="form-label">🛤 Seleccione una Ruta</label>
+                <select asp-for="RutaId" class="form-select" asp-items="ViewBag.RutaId">
+                    <option value="">Seleccione una Ruta</option>
+                </select>
+                <span asp-validation-for="RutaId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="VehiculoId" class="control-label"></label>
-                <select asp-for="VehiculoId" class ="form-control" asp-items="ViewBag.VehiculoId"></select>
+
+            <div class="mb-3">
+                <label asp-for="VehiculoId" class="form-label">🚗 Seleccione un Vehículo</label>
+                <select asp-for="VehiculoId" class="form-select" asp-items="ViewBag.VehiculoId">
+                    <option value="">Seleccione un Vehículo</option>
+                </select>
+                <span asp-validation-for="VehiculoId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-secondary">🔙 Volver al Listado</a>
+                <button type="submit" class="btn btn-success">✅ Asignar Vehículo</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -1,58 +1,62 @@
 ﻿@model GRUPO_3_SC_701.Models.Vehiculo
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Registrar Vehículo";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
+    <h2 class="mb-3">🚗 Registrar Nuevo Vehículo</h2>
 
-<h4>Vehiculo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Placa" class="control-label"></label>
-                <input asp-for="Placa" class="form-control" />
-                <span asp-validation-for="Placa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Modelo" class="control-label"></label>
-                <input asp-for="Modelo" class="form-control" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Capacidad" class="control-label">Capacidad</label>
-                <input asp-for="Capacidad" class="form-control" />
-                <span asp-validation-for="Capacidad" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label">Estado del Vehículo</label>
-                <select asp-for="Estado" class="form-control"
-                        asp-items="Html.GetEnumSelectList<EstadoVehiculo>()">
-                </select>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            
-            <div class="form-group">
-                <label asp-for="UsuarioRegistroId" class="control-label">Conductor</label>
-                <select asp-for="UsuarioRegistroId" class ="form-control" asp-items="ViewBag.UsuarioRegistroId"></select>
-            </div>
-            <br />
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="mb-3">
+                    <label asp-for="Placa" class="form-label">Placa del Vehículo</label>
+                    <input asp-for="Placa" class="form-control" placeholder="Ej: ABC-1234" />
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Modelo" class="form-label">Modelo</label>
+                    <input asp-for="Modelo" class="form-control" placeholder="Ej: Toyota Hiace 2022" />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Capacidad" class="form-label">Capacidad de Pasajeros</label>
+                    <input asp-for="Capacidad" class="form-control" type="number" placeholder="Ej: 30" />
+                    <span asp-validation-for="Capacidad" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Estado" class="form-label">Estado del Vehículo</label>
+                    <select asp-for="Estado" class="form-select"
+                            asp-items="Html.GetEnumSelectList<EstadoVehiculo>()">
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="UsuarioRegistroId" class="form-label">Conductor Asignado</label>
+                    <select asp-for="UsuarioRegistroId" class="form-select" asp-items="ViewBag.UsuarioRegistroId">
+                        <option value="">Seleccione un conductor</option>
+                    </select>
+                    <span asp-validation-for="UsuarioRegistroId" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">🔙 Volver</a>
+                    <button type="submit" class="btn btn-primary">💾 Guardar Vehículo</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
