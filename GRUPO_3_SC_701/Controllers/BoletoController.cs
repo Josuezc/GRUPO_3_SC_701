@@ -29,10 +29,10 @@ namespace GRUPO_3_SC_701.Controllers
             //obtiene el id del usuario logeado
             string userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
-            if (userRole=="User")
+            if (userRole=="Usuario")
             {
 
-                var boletoUsuario = _context.Boletos.Include(b => b.Horario).Include(b => b.Usuario).Where(b=>b.UsuarioId == userId);
+                var boletoUsuario = _context.Boletos.Include(b => b.Horario).ThenInclude(b => b.Ruta).Include(b => b.Usuario).Where(b=>b.UsuarioId == userId);
                 return View(await boletoUsuario.ToListAsync());
             }
             if (userRole == "Conductor")
@@ -50,7 +50,7 @@ namespace GRUPO_3_SC_701.Controllers
                 return View(boletos);
             }
             //admin
-            var applicationDbContext = _context.Boletos.Include(b => b.Horario).Include(b => b.Usuario);
+            var applicationDbContext = _context.Boletos.Include(b => b.Horario).ThenInclude(b => b.Ruta).Include(b => b.Usuario);
             return View(await applicationDbContext.ToListAsync());
 
         }

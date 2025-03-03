@@ -21,14 +21,15 @@
 
 
                 var userRol = roles.Any() ? roles.First() : "Sin Rol";
-                @if (userRol == "Admin")
+                @if (userRol == "Administrador")
                 {
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="UsuarioId" class="control-label"></label>
                     <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
                 </div>
                 }
-                @if (userRol=="User")
+                @if (userRol=="Usuario")
             {
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
